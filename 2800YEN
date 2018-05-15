@@ -48,4 +48,12 @@
 38. SELECT 名称 AS なまえ,HP AS 現在のHP,CHAR_LENGTH(名称) * 10 AS 予想ダメージ FROM パーティー;
 39. UPDATE パーティー SET 状態コード = '04' WHERE HP MOD 4 = 0 OR MP MOD 4 = 0;
 40. SELECT TRUNCATE(777 * 0.7,0) AS 女神の祝福;
-41. 
+41. UPDATE パーティー SET HP = TRUNCATE(HP * 1.3,0),MP = TRUNCATE(MP * 1.3,0);
+42. SELECT 名称 AS なまえ,HP,POW(HP,0) AS 攻撃１回目,POW(HP,1) AS 攻撃２回目,POW(HP,2) AS 攻撃３回目 FROM パーティー;
+43. SELECT 名称 AS なまえ,HP,状態コード,CASE WHEN HP <= 50 THEN 3 + CAST(状態コード AS SIGNED) WHEN HP >= 51 AND HP <= 100 THEN 2 + CAST(状態コード AS SIGNED) WHEN HP >= 101 AND HP <= 150 THEN 1 + CAST(状態コード AS SIGNED) ELSE CAST(状態コード AS SIGNED) END AS リスク値 FROM パーティー ORDER BY リスク値 DESC,HP;  
+44. SELECT CASE WHEN 前提イベント番号 IS NULL THEN '前提なし' ELSE CAST(前提イベント番号 AS SIGNED) END AS 前提イベント番号,イベント番号,CASE WHEN 後続イベント番号 IS NULL THEN '後続なし' ELSE CAST(後続イベント番号 AS SIGNED) END AS 後続イベント番号 FROM イベント ORDER BY イベント番号;
+
+#LEVEL_5
+45. SELECT MAX(HP),MAX(MP),MIN(HP),MIN(MP),AVG(HP),AVG(MP) FROM パーティー;
+46. SELECT CASE タイプ WHEN '1' THEN '強制' WHEN '2' THEN 'フリー' WHEN '3' THEN '特殊' END AS タイプ,COUNT(イベント番号) AS イベント数 FROM イベント GROUP BY タイプ;
+47.
